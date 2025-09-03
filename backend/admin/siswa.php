@@ -6,7 +6,6 @@
         <a href="?page=admin/t_siswa" class="btn btn-primary">Tambah Data</a>
       </div>
       <div class="card-body">
-        <!-- Pencarian dan Pilihan Jumlah Data -->
         <div class="row mb-3">
           <div class="col-md-6 mb-2">
             <input type="text" id="searchInput" class="form-control" placeholder="Cari siswa...">
@@ -89,13 +88,29 @@ document.addEventListener("DOMContentLoaded", function () {
         const totalPages = Math.ceil(filteredRows.length / rowsPerPage);
         if(currentPage > totalPages) currentPage = totalPages || 1;
 
-        filteredRows.forEach(r => r.style.display = "none");
+        rows.forEach(r => r.style.display = "none");
+
+        if (filteredRows.length === 0) {
+            if (!document.getElementById("noDataRow")) {
+                const noDataRow = document.createElement("tr");
+                noDataRow.id = "noDataRow";
+                noDataRow.innerHTML = `<td colspan="7" class="text-center text-muted">Tidak ada data yang sesuai</td>`;
+                table.querySelector("tbody").appendChild(noDataRow);
+            }
+            pageInfo.innerText = `Halaman 0 dari 0`;
+            prevBtn.disabled = true;
+            nextBtn.disabled = true;
+            return;
+        } else {
+            const noDataRow = document.getElementById("noDataRow");
+            if (noDataRow) noDataRow.remove();
+        }
 
         const start = (currentPage - 1) * rowsPerPage;
         const end = start + rowsPerPage;
         filteredRows.slice(start, end).forEach((row, i) => {
             row.style.display = "";
-            row.cells[0].innerText = start + i + 1;
+            row.cells[0].innerText = start + i + 1; 
         });
 
         pageInfo.innerText = `Halaman ${currentPage} dari ${totalPages}`;
@@ -103,11 +118,11 @@ document.addEventListener("DOMContentLoaded", function () {
         nextBtn.disabled = currentPage === totalPages;
     }
 
-    // Pencarian langsung saat mengetik
     searchInput.addEventListener("input", function () {
         const keyword = this.value.toLowerCase();
         filteredRows = rows.filter(row => {
-            return Array.from(row.cells).some(cell => 
+            const cells = Array.from(row.cells).slice(0, -1);
+            return cells.some(cell => 
                 cell.innerText.toLowerCase().includes(keyword)
             );
         });
@@ -127,3 +142,4 @@ document.addEventListener("DOMContentLoaded", function () {
     renderTable();
 });
 </script>
+

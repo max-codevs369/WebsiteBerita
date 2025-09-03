@@ -55,7 +55,6 @@ if(isset($_POST['edit'])){
         }
     }
 
-    // Update data artikel publish
     $updateQuery = "UPDATE artikelpublish 
                     SET judulArtikelPublish='$judulArtikelPublish', kategori='$kategori', 
                         tglTerbit='$tglTerbit', isiArtikelPublish='$isiArtikelPublish', 
