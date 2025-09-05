@@ -30,7 +30,8 @@
 
       <form action="prosesRegister.php" method="post">
         <div class="form-group mb-3">
-            <select  name="nisn" class="form-control">
+            <select  name="nisn" class="form-control" required>
+              <option value="" class="form-control">Pilih NISN</option>
               <?php
                 include "koneksi.php";
                 $sql=mysqli_query($koneksi, "SELECT * FROM siswa");
@@ -54,12 +55,19 @@
             </div>
           </div>
         </div>
-        <div class="input-group mb-3">
+        <!-- <div class="input-group mb-3">
           <input type="text" class="form-control" name="level" placeholder="level" required>
           <div class="input-group-append">
             <div class="input-group-text">
             </div>
           </div>
+        </div> -->
+        <div class="form-group mb-3">
+            <select name="level" class="form-control" required>
+              <option value="" class="form-control">Pilih Level</option>
+              <option class="form-control" value="penulis">Penulis</option>
+              <option class="form-control" value="siswa">Siswa</option>
+            </select>
         </div>
         <div class="row">
           <!-- /.col -->

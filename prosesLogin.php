@@ -34,6 +34,9 @@ if ($result->num_rows > 0) {
         header("Location: backend/dashboardPenulis.php");
     } elseif ($user['level'] == 'siswa') {
         header("Location: index.php");
+    }else{
+        echo "<div align='center'>Level tidak dikenali! <br>";
+        echo "<a href='register.php'>Silahkan Registrasi Ulang!</a></div>";
     }
     exit;
 } else {
